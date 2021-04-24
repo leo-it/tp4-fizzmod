@@ -21,9 +21,9 @@ app.set('views', './views');
 
 /*     rutas GET      */
 router.get('/', async (req, res, next) => {
-
     res.render('ingreso')
 })
+
 router.get('/set-correo', async (req, res, next) => {
 
     res.render('set-correo')
@@ -45,22 +45,24 @@ router.get('/listar', (req, res) => {
 /*    rutas POST    */
 let contador = 10;
 
-router.post('/ingreso', (req, res) => {
+router.post('/ingreso', async (req, res) => {
     let producto = req.body
     let val = validaciones.validar(producto)
     if (val.result) {
         const productoNuevo = new model.producto(producto)
-        productoNuevo.save(err => {
+       await productoNuevo.save(err => {
             if (err) throw new Error(`=======error en escritura de producto: ${err}`)
             console.log('producto incorporado')
-            res.send(producto)
-            contador--
+/*             res.send(producto)
+ */            contador--
             while (contador == 0) {
                 getMail.getMail()
                 contador = 10
             }
             console.log(contador);
             console.log(req.body);
+            res.redirect('/')
+
         })
 
     } else {
@@ -77,7 +79,6 @@ router.post('/set-correo', (req, res, next) => {
         correoNuevo.save(err => {
             if (err) throw new Error(`=======error en escritura de correo: ${err}`)
             console.log('correo incorporado')
-            res.send(correo)
             //funcion para ej 5 escribe sobre archivo txt el mail ingresado
             async function texto() {
                 try {
@@ -86,7 +87,8 @@ router.post('/set-correo', (req, res, next) => {
                     console.log(correo.mail);
                     //Leo un archivo
                     let dat = await fs.promises.readFile("./correo.dat.txt", 'utf-8')
-               
+                    res.redirect('/')
+
                 } catch (error) {
                     console.log(`Error--: ${error}`)
                 }
