@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fizzmod TP</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body style="background-color: rgba(0, 255, 255, 0.1);" >
+
+    <%- include('./navbar')-%>
+<div class="container">
+    <form  id="correoForm" action="/set-correo" target="_blank" method="post"
+        class=" p-5 grey-box container row row-cols-2 text-center">
+        <div class="container bg-white p-5 col">
+            <h4>Ingresa tu mail </h4>
+            <div class=" line"></div>
+            <div class="mb-3 col-lg-12 formulario">
+                <label for="exampleFormControlInput1" class="form-label tre " id=""></label>
+                <input type="email" name="mail" class="form-control " id="email-id" required>
+            </div>
+            
+            <div>
+                <button type="submit" id="submitIngreso" class="btn btn-secondary publicar-btn"
+                    style="background-color: rgb(95, 127, 255);">Cargar Correo</button>
+           </div>
+        </div>
+    </form>
+</div>
+<div class="pt-5"><div class="pt-5"></div></div>
+<%- include('./footer')-%>
+
+</body>
+
+</html>
