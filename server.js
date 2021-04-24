@@ -24,10 +24,6 @@ router.get('/', async (req, res, next) => {
 
     res.render('ingreso')
 })
-router.get('/', async (req, res, next) => {
-
-    res.render('ingreso')
-})
 router.get('/set-correo', async (req, res, next) => {
 
     res.render('set-correo')
@@ -61,7 +57,7 @@ router.post('/ingreso', (req, res) => {
             contador--
             while (contador == 0) {
                 getMail.getMail()
-                contador = 5
+                contador = 10
             }
             console.log(contador);
             console.log(req.body);
