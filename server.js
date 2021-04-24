@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
@@ -9,7 +10,6 @@ const modelCorreos = require('./model/correos')
 const fs = require('fs')
 const nodemailer = require('nodemailer')
 const getMail = require('./js/nodeMailer')
-
 app.use(express.urlencoded({
     extended: true
 }))
@@ -109,7 +109,7 @@ const PORT = process.env.PORT || 3000
 
 /* ---------------------------------------------------------------------------------- */
 /* Conexión a MongoDB */
-mongoose.connect('mongodb+srv://leofizzmod:fizzmod123@cluster0.yz03y.mongodb.net/fizzmod?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://leofizzmod:${process.env.PASSWORD}@cluster0.yz03y.mongodb.net/fizzmod?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, err => {
