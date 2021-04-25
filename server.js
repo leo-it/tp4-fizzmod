@@ -28,25 +28,31 @@ router.get('/set-correo', async (req, res, next) => {
 
     res.render('set-correo')
 })
-
 router.get('/listar', (req, res) => {
 
     model.producto.find((err, productos) => {
         if (err) throw new Error(`error en lectura de productos: ${err}`)
+     
         productos.forEach(producto => {
-            console.log(producto)
-        })
+            
+/*             console.log(producto)
+ */        })
         res.render('listar', {
             productos
         })
     })
 
 })
+
+
 /*    rutas POST    */
 let contador = 10;
-
+let contarr=0
+let arr =[]
+let product =[]
 router.post('/ingreso', async (req, res) => {
     let producto = req.body
+    const { nombre, precio, descripcion } = req.body;
     let val = validaciones.validar(producto)
     if (val.result) {
         const productoNuevo = new model.producto(producto)
@@ -54,13 +60,18 @@ router.post('/ingreso', async (req, res) => {
             if (err) throw new Error(`=======error en escritura de producto: ${err}`)
             console.log('producto incorporado')
 /*             res.send(producto)
- */            contador--
+ */   arr.push(productoNuevo)
+         contador--
+       
             while (contador == 0) {
-                getMail.getMail()
+                product.push(arr[contarr])
+                console.log(product);
+                getMail.getMail(product)
                 contador = 10
             }
-            console.log(contador);
-            console.log(req.body);
+              contarr++
+           /*  console.log(contador);
+            console.log(req.body); */
             res.redirect('/')
 
         })

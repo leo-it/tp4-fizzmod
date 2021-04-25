@@ -1,8 +1,12 @@
+const express = require('express')
+const router = express.Router()
 const fs = require('fs')
 const nodemailer = require('nodemailer')
+const model = require('../model/productos')
 
 
-async function getMail() {
+async function getMail(arr) {
+
     let mail;
     try {
         //Leo un archivo
@@ -22,16 +26,17 @@ async function getMail() {
     const mailOptions = {
         from: 'leo.pruebas123.db@gmail.com',
         to: mail,
-        subject: 'Mail de prueba desde Node.js (2)',
-        html: '<h1 style="color:crimson;">desde tp4 Otro Contenido de prueba desde <span style="color:orangered;">Node.js con Nodemailer</span></h1>'
-    }
+        subject: 'TP4 Leonardo Sainz NodeMailer',
+        text:"Lista de productos:"+ JSON.stringify(arr, null, 4)
+        
+     }
 
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
             console.log(err)
             return err
         }
-        console.log(info)
+     /*    console.log(info) */
     })
 }
 
