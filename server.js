@@ -21,16 +21,14 @@ app.set('views', './views');
 
 /*     rutas GET      */
 router.get('/', async (req, res, next) => {
-    
-    while (contador == 0) {
-        if(productos){
-       await getMail.getMail(productos)
-       console.log(productos);
-    }else{
-        console.log("no if else");
-    }
-    }
-    
+    model.producto.find((err, productos) => {
+        if (err) throw new Error(`error en lectura de productos: ${err}`)
+        if (contador == 1) {
+            getMail.getMail(productos)
+            console.log(productos);
+        }
+    })
+
     res.render('ingreso')
 })
 
@@ -41,38 +39,28 @@ router.get('/set-correo', async (req, res, next) => {
 router.get('/listar', (req, res) => {
     model.producto.find((err, productos) => {
         if (err) throw new Error(`error en lectura de productos: ${err}`)
-/*          getMail.getMail(productos)
- */        
-             productos.forEach(producto => {
-/*              console.log(producto)
- */            
-         })
+        productos.forEach(producto => {})
         res.render('listar', {
             productos
         })
     })
-
 })
 
-
 /*    rutas POST    */
-let contador = 2;
+let contador = 11;
 router.post('/ingreso', async (req, res) => {
     let producto = req.body
     let val = validaciones.validar(producto)
     if (val.result) {
         const productoNuevo = new model.producto(producto)
-       await productoNuevo.save(err => {
+        await productoNuevo.save(err => {
             if (err) throw new Error(`=======error en escritura de producto: ${err}`)
-            console.log('producto incorporado') 
-         contador--
+            console.log('producto incorporado')
+            contador--
             while (contador == 0) {
-                getMail.getMail()
-                contador = 2
+                contador = 11
             }
-        
             res.redirect('/')
-
         })
 
     } else {
@@ -111,9 +99,7 @@ router.post('/set-correo', (req, res, next) => {
     }
 })
 
-
 app.use('/', router)
-
 
 const PORT = process.env.PORT || 3000
 
