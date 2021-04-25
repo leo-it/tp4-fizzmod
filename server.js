@@ -62,9 +62,9 @@ router.post('/ingreso', async (req, res) => {
 /*             res.send(producto)
  */   arr.push(productoNuevo)
          contador--
-       
+                       product.push(arr[contarr])
+
             while (contador == 0) {
-                product.push(arr[contarr])
                 console.log(product);
                 getMail.getMail(product)
                 contador = 10
