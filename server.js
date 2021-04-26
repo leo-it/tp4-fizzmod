@@ -47,7 +47,7 @@ router.get('/listar', (req, res) => {
 })
 
 /*    rutas POST    */
-let contador = 2;
+let contador = 11;
 router.post('/ingreso', async (req, res) => {
     let producto = req.body
     let val = validaciones.validar(producto)
@@ -58,7 +58,7 @@ router.post('/ingreso', async (req, res) => {
             console.log('producto incorporado')
             contador--
             while (contador == 0) {
-                contador = 2
+                contador = 11
             }
             res.redirect('/')
         })
