@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
             getMail.getMail(productos)
             console.log(productos);
         }
-    })
+    }).lean()
 
     res.render('ingreso')
 })
@@ -47,7 +47,7 @@ router.get('/listar', (req, res) => {
 })
 
 /*    rutas POST    */
-let contador = 11;
+let contador = 2;
 router.post('/ingreso', async (req, res) => {
     let producto = req.body
     let val = validaciones.validar(producto)
@@ -58,7 +58,7 @@ router.post('/ingreso', async (req, res) => {
             console.log('producto incorporado')
             contador--
             while (contador == 0) {
-                contador = 11
+                contador = 2
             }
             res.redirect('/')
         })
