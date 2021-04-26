@@ -10,6 +10,7 @@ const modelCorreos = require('./model/correos')
 const fs = require('fs')
 const nodemailer = require('nodemailer')
 const getMail = require('./js/nodeMailer')
+let contador = 10;
 app.use(express.urlencoded({
     extended: true
 }))
@@ -23,9 +24,10 @@ app.set('views', './views');
 router.get('/', async (req, res, next) => {
     model.producto.find((err, productos) => {
         if (err) throw new Error(`error en lectura de productos: ${err}`)
-        if (contador == 1) {
+        if (contador == 0) {
             getMail.getMail(productos)
             console.log(productos);
+            contador = 10
         }
     }).lean()
 
@@ -47,7 +49,7 @@ router.get('/listar', (req, res) => {
 })
 
 /*    rutas POST    */
-let contador = 11;
+
 router.post('/ingreso', async (req, res) => {
     let producto = req.body
     let val = validaciones.validar(producto)
@@ -57,9 +59,6 @@ router.post('/ingreso', async (req, res) => {
             if (err) throw new Error(`=======error en escritura de producto: ${err}`)
             console.log('producto incorporado')
             contador--
-            while (contador == 0) {
-                contador = 11
-            }
             res.redirect('/')
         })
 
