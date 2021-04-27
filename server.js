@@ -10,7 +10,7 @@ const modelCorreos = require('./model/correos')
 const fs = require('fs')
 const nodemailer = require('nodemailer')
 const getMail = require('./js/nodeMailer')
-let contador = 10;
+let contador = 3;
 app.use(express.urlencoded({
     extended: true
 }))
@@ -19,25 +19,26 @@ app.use(express.json())
 //motor de plantillas view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+app.use(express.static('public'))
 
 /*     rutas GET      */
 router.get('/', async (req, res, next) => {
     model.producto.find((err, productos) => {
         if (err) throw new Error(`error en lectura de productos: ${err}`)
-        if (contador == 0) {
+        if (contador == 1) {
             getMail.getMail(productos)
             console.log(productos);
-            contador = 10
+            contador = 3
         }
     }).lean()
-
-    res.render('ingreso')
-})
+     res.render('index.html')
+ })
 
 router.get('/set-correo', async (req, res, next) => {
+    res.sendFile(process.cwd()+'/public/set-correo.html')
 
-    res.render('set-correo')
-})
+/*     res.render('set-correo')*/
+ })
 router.get('/listar', (req, res) => {
     model.producto.find((err, productos) => {
         if (err) throw new Error(`error en lectura de productos: ${err}`)
