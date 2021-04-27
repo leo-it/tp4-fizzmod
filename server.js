@@ -10,7 +10,7 @@ const modelCorreos = require('./model/correos')
 const fs = require('fs')
 const nodemailer = require('nodemailer')
 const getMail = require('./js/nodeMailer')
-let contador = 10;
+let contador = 3;
 app.use(express.urlencoded({
     extended: true
 }))
@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
         if (contador == 0) {
             getMail.getMail(productos)
             console.log(productos);
-            contador = 10
+            contador = 3
         }
     }).lean()
 
